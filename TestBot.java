@@ -19,13 +19,13 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 @TeleOp (name= "TestBot", group="Pushbot")
 public class TestBot extends OpMode {
 
-    HardwarePushbot robot       = new HardwarePushbot();
+    HardwarePushbot robot = new HardwarePushbot();
 
-    double          ClampOffset  = 0.1 ;
-    final double    ClampSpeed  = 0.4 ;
+    double ClampOffset = 0.1;
+    final double ClampSpeed = 0.4;
 
-    double          StringOffset = 0.2 ;
-    final double    StringSpeed = 1 ;
+    double StringOffset = 0.2;
+    final double StringSpeed = 1;
 
     DcMotor FrontM;
     DcMotor BackM;
@@ -44,9 +44,9 @@ public class TestBot extends OpMode {
     Servo Clamp6;
     Servo Clamp1;
 
-    public static final double STRING       =  0.5 ;
-    public static final double LEFT_CLAMP   =  0.5 ;
-    public static final double RIGHT_CLAMP  =  0.5 ;
+    public static final double STRING = 0.5;
+    public static final double LEFT_CLAMP = 0.5;
+    public static final double RIGHT_CLAMP = 0.5;
 
     double x = 0;
     double y = 0;
@@ -85,6 +85,7 @@ public class TestBot extends OpMode {
         String3.setPosition(.5);
         String4.setPosition(.5);
     }
+
     @Override
     public void loop() {
         float LeftY = -gamepad1.left_stick_y;
@@ -92,7 +93,7 @@ public class TestBot extends OpMode {
         float RightX = gamepad1.right_stick_x;
         float RightY = -gamepad1.right_stick_y;
         float RightY2 = gamepad2.right_stick_y;
-        float LeftY2 =  gamepad2.left_stick_y;
+        float LeftY2 = gamepad2.left_stick_y;
         //Turning and Clamp and String
 
         double Front = -scaleInput(LeftX) - scaleInput(RightX);
@@ -117,25 +118,25 @@ public class TestBot extends OpMode {
 
         StringOffset = Range.clip(ClampOffset, -1, 1);
         if (gamepad2.a) {
-            StringOffset +=StringSpeed;
+            StringOffset += StringSpeed;
             Clamp1.setPosition(StringOffset);
-        }else if (gamepad2.y) {
-            StringOffset -=StringSpeed;
+        } else if (gamepad2.y) {
+            StringOffset -= StringSpeed;
             Clamp1.setPosition(StringOffset);
-        }else {
+        } else {
             Clamp1.setPosition(.5);
         }
 
         StringOffset = Range.clip(ClampOffset, -1, 1);
         if (gamepad1.dpad_up) {
-            StringOffset -=StringSpeed;
+            StringOffset -= StringSpeed;
             String3.setPosition(StringOffset);
             String4.setPosition(StringOffset);
-        }else if (gamepad1.dpad_down) {
-            StringOffset +=StringSpeed;
+        } else if (gamepad1.dpad_down) {
+            StringOffset += StringSpeed;
             String4.setPosition(StringOffset);
             String3.setPosition(StringOffset);
-        }else {
+        } else {
             String4.setPosition(.5);
             String3.setPosition(.5);
         }
@@ -143,10 +144,10 @@ public class TestBot extends OpMode {
         if (gamepad2.right_bumper) {
             Clamp6.setPosition(1);
             Clamp5.setPosition(0);
-        }else if (gamepad2.left_bumper) {
+        } else if (gamepad2.left_bumper) {
             Clamp5.setPosition(1);
             Clamp6.setPosition(0);
-        }else {
+        } else {
             Clamp5.setPosition(.5);
             Clamp6.setPosition(.5);
         }
@@ -156,43 +157,14 @@ public class TestBot extends OpMode {
             ClampOffset += ClampSpeed;
             LeftClamp.setPosition(ClampOffset);
             RightClamp.setPosition(-ClampOffset);
-        }else if (gamepad2.left_trigger > 0.5) {
+        } else if (gamepad2.left_trigger > 0.5) {
             ClampOffset += ClampSpeed;
             LeftClamp.setPosition(-ClampOffset);
             RightClamp.setPosition(ClampOffset);
-        }else {
+        } else {
             LeftClamp.setPosition(.5);
             RightClamp.setPosition(.5);
         }
     }
-
-    double scaleInput(double dVal) {
-        double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
-                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.80};
-
-        // get the corresponding index for the scaleInput array.
-        int index = (int) (dVal * 15.0);
-
-        // index should be positive.
-        if (index < 0) {
-            index = -index;
-        }
-
-        // index cannot exceed size of array minus 1.
-        if (index > 14) {
-            index = 14;
-        }
-
-        // get value from the array.
-        double dScale = 0.0;
-        if (dVal < 0) {
-            dScale = -scaleArray[index];
-        } else {
-            dScale = scaleArray[index];
-        }
-
-        // return scaled value.
-        return dScale;
-    }
-
 }
+
